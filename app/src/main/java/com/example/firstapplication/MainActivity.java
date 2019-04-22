@@ -5,6 +5,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -14,12 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity {
-    //    定义FragmentTabHost对象
     private FragmentTabHost mTabHost;
-
     private LayoutInflater mInflater;
-
-    private List<Tab> mTabs = new ArrayList<>(2);
+    private ArrayList<Tab> mTabs= new ArrayList<Tab>(2);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,28 +28,33 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void initTab() {
-        Tab tab_home = new Tab(HomeFragment.class, 0);
-        Tab tab_search = new Tab(SearchFragment.class, 1);
+        Tab Tab_home = new Tab(R.drawable.home, R.string.home, HomeFragment.class);
+        Tab Tab_search = new Tab(R.drawable.search, R.string.search, SearchFragment.class);
 
-        mTabs.add(tab_home);
-        mTabs.add(tab_search);
+        mTabs.add(Tab_home);
+        mTabs.add(Tab_search);
 
         mInflater = LayoutInflater.from(this);
         mTabHost = findViewById(android.R.id.tabhost);
-        mTabHost.setup(this, getSupportFragmentManager(), R.id.tabcontent);
+        mTabHost.setup(this, getSupportFragmentManager(), R.id.realcontent);
 
         for (Tab tab : mTabs) {
-            TabHost.TabSpec tabSpec = mTabHost.newTabSpec(getString(tab.getTitle()));
-            tabSpec.setIndicator(buildIndicator(tab));
+            TabHost.TabSpec tabSpec = mTabHost.newTabSpec(String.valueOf(tab.getText()));
+            tabSpec.setIndicator(buildView(tab));
             mTabHost.addTab(tabSpec, tab.getFragment(), null);
         }
 
+        mTabHost.getTabWidget().setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
     }
 
-    private View buildIndicator(Tab tab) {
+    private View buildView(Tab tab) {
         View view = mInflater.inflate(R.layout.tab_item, null);
-        TextView text = view.findViewById(R.id.textview);
-        text.setText(tab.getTitle());
+        ImageView Tab_img = view.findViewById(R.id.tab_img);
+        TextView Tab_txt = view.findViewById(R.id.tab_txt);
+
+        Tab_img.setBackgroundResource(tab.getImage());
+        Tab_txt.setText(tab.getText());
+
         return view;
     }
 }

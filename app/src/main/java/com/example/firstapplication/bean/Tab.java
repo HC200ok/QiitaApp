@@ -1,30 +1,38 @@
 package com.example.firstapplication.bean;
 
 public class Tab {
-    private int title;
+    private int Image;
+    private int Text;
+    private Class Fragment;
 
-    private Class fragment;
-
-    public Tab(Class fragment, int title) {
-        super();
-        this.title = title;
-        this.fragment = fragment;
+    public Tab(int image, int text, Class fragment) {
+        Image = image;
+        Text = text;
+        Fragment = fragment;
     }
 
-    public int getTitle() {
-        return title;
+    public int getImage() {
+        return Image;
     }
 
-    public void setTitle(int title) {
-        this.title = title;
+    public void setImage(int image) {
+        Image = image;
+    }
+
+    public int getText() {
+        return Text;
+    }
+
+    public void setText(int text) {
+        Text = text;
     }
 
     public Class getFragment() {
-        return fragment;
+        return Fragment;
     }
 
     public void setFragment(Class fragment) {
-        this.fragment = fragment;
+        Fragment = fragment;
     }
 }
 

@@ -8,19 +8,19 @@
     android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/contentLayout"
+        android:id="@+id/realcontent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
     </FrameLayout>
 
     <android.support.v4.app.FragmentTabHost
-        android:id="@+id/tabhost"
+        android:id="@android:id/tabhost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#F6F6F6">
         <FrameLayout
-            android:id="@+id/tabcontent"
+            android:id="@android:id/tabcontent"
             android:layout_width="0dp"
             android:layout_height="0dp"></FrameLayout>
     </android.support.v4.app.FragmentTabHost>
