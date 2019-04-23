@@ -13,12 +13,11 @@ import android.widget.TextView;
 import com.example.firstapplication.bean.Tab;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends FragmentActivity {
     private FragmentTabHost mTabHost;
     private LayoutInflater mInflater;
-    private ArrayList<Tab> mTabs= new ArrayList<Tab>(2);
+    private ArrayList<Tab> mTabs= new ArrayList<>(2);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
