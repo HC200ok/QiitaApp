@@ -31,21 +31,18 @@ public class HotFragment extends SmartRefreshFragment {
 
     Posts posts;
     RecyclerView recyclerView;
-    TextView tv_print;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_hot, null);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView = view.findViewById(R.id.recyclerview);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
 //        initSmartRefresh(view);
-        return view;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         getData();
+        return view;
     }
 
     private void getData() {
@@ -60,7 +57,8 @@ public class HotFragment extends SmartRefreshFragment {
                 //Gson解析
                 Gson gson = new Gson();
                 String result = response.body().string();
-                posts = gson.fromJson(f(result), Posts.class);
+                result = "{results:" + result + "}";
+                posts = gson.fromJson(result, Posts.class);
                 if (response.isSuccessful()) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override

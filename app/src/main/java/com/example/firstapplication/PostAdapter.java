@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.firstapplication.bean.Post;
+import com.example.firstapplication.util.RelativeDateFormat;
 
 import java.util.List;
 
@@ -31,8 +32,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-//        viewHolder.author.setText(data.get(i).getUser());
-        viewHolder.time.setText(data.get(i).getCreated_at());
+        viewHolder.author.setText(data.get(i).getUser().getAuthor());
+        viewHolder.time.setText(RelativeDateFormat.format(data.get(i).getCreated_at()));
         viewHolder.title.setText(data.get(i).getTitle());
     }
 
