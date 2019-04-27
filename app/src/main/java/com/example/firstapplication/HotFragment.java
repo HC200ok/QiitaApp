@@ -29,64 +29,80 @@ import okhttp3.Response;
 
 public class HotFragment extends SmartRefreshFragment {
 
-    Posts posts;
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
+    private RefreshLayout refreshLayout;
+    private PostAdapter postAdapter;
+    private int page = 1;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_hot, null);
+
+        initRecyclerView(view);
+        initSmartRefresh(view);
+
+        getData("firstLoad");
+        return view;
+    }
+
+    private void initRecyclerView(View view) {
         recyclerView = view.findViewById(R.id.recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-//        initSmartRefresh(view);
-        getData();
-        return view;
-    }
-
-    private void getData() {
-        String url = "https://qiita.com/api/v2/items?page=1&per_page=20";
-        OkHttp3Utils.doGet(url, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                //Gson解析
-                Gson gson = new Gson();
-                String result = response.body().string();
-                result = "{results:" + result + "}";
-                posts = gson.fromJson(result, Posts.class);
-                if (response.isSuccessful()) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            PostAdapter postAdapter = new PostAdapter(getContext(), posts.getResults());
-                            recyclerView.setAdapter(postAdapter);
-                            postAdapter.notifyDataSetChanged();
-                        }
-                    });
-                }
-
-            }
-        });
-
     }
 
     private void initSmartRefresh(View view) {
-        RefreshLayout refreshLayout = view.findViewById(R.id.refreshLayout);
+        refreshLayout = view.findViewById(R.id.refreshLayout);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(2000);
+                getData("refresh");
             }
         });
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadmore(2000);
+                getData("loadMore");
+            }
+        });
+    }
+
+    private void getData(final String loadType) {
+        if (loadType == "firstLoad") page = 1;
+        String url = "https://qiita.com/api/v2/items?per_page=2&page=" + page;
+        OkHttp3Utils.doGet(url, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {}
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //Gson解析
+                Gson gson = new Gson();
+                String posts_string = "{results:" + response.body().string() + "}";
+                Posts posts = gson.fromJson(posts_string, Posts.class);
+                final List<Post> results = posts.getResults();
+
+                if (response.isSuccessful()) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (loadType == "firstLoad") {
+                                postAdapter = new PostAdapter(getContext(), results);
+                                recyclerView.setAdapter(postAdapter);
+                                postAdapter.notifyDataSetChanged();
+                            } else if (loadType == "refresh") {
+                                postAdapter.refreshData(results);
+                                refreshLayout.finishRefresh();
+                            } else if (loadType == "loadMore") {
+                                postAdapter.loadMore(results);
+                                refreshLayout.finishLoadmore();
+                            }
+                            page++;
+                        }
+                    });
+                }
+
             }
         });
     }

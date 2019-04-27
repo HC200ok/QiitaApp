@@ -31,7 +31,15 @@
         android:layout_height="wrap_content"
         android:textColor="#777"
         android:layout_marginTop="10dp"
-        android:text="在整体垂直排列的基础上想要实现内部水平排列，则在整体LinearLayout布局下再创建一个LinearLayout布局。"/>
+        android:text=""/>
+
+    <TextView
+        android:id="@+id/post_tags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#999"
+        android:layout_marginTop="10dp"
+        android:text=""/>
 
     <View
         android:layout_marginTop="15dp"
