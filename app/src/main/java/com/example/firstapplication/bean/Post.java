@@ -5,8 +5,10 @@ import java.util.List;
 public class Post {
     private String created_at;
     private String title;
+    private String rendered_body;
     private User user;
     private List<Tag> tags;
+
 
     public String getCreated_at() {
         return created_at;
@@ -38,5 +40,13 @@ public class Post {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public String getRendered_body() {
+        return rendered_body;
+    }
+
+    public void setRendered_body(String rendered_body) {
+        this.rendered_body = rendered_body;
     }
 }

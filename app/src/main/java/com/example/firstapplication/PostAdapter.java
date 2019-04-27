@@ -1,6 +1,7 @@
 package com.example.firstapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,10 +35,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.author.setText(data.get(i).getUser().getId());
-        viewHolder.time.setText(RelativeDateFormat.format(data.get(i).getCreated_at()));
-        viewHolder.title.setText(data.get(i).getTitle());
-        viewHolder.tags.setText(tagsToString(data.get(i).getTags()));
+        final Post post = data.get(i);
+        viewHolder.author.setText(post.getUser().getId());
+        viewHolder.time.setText(RelativeDateFormat.format(post.getCreated_at()));
+        viewHolder.title.setText(post.getTitle());
+        viewHolder.tags.setText(tagsToString(post.getTags()));
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, PostActivity.class);
+                intent.putExtra(PostActivity.POST_BODY, post.getRendered_body());
+                context.startActivity(intent);
+            }
+        });
     }
 
     public void loadMore(List<Post> posts) {
@@ -64,13 +74,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView author;
-        private TextView time;
-        private TextView title;
-        private TextView tags;
+        TextView author;
+        TextView time;
+        TextView title;
+        TextView tags;
+        View itemView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            this.itemView = itemView;
             author = itemView.findViewById(R.id.post_author);
             time = itemView.findViewById(R.id.post_time);
             title = itemView.findViewById(R.id.post_title);

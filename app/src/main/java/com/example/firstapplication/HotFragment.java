@@ -71,7 +71,7 @@ public class HotFragment extends SmartRefreshFragment {
 
     private void getData(final String loadType) {
         if (loadType == "firstLoad") page = 1;
-        String url = "https://qiita.com/api/v2/items?per_page=2&page=" + page;
+        String url = "https://qiita.com/api/v2/items?per_page=20&page=" + page;
         OkHttp3Utils.doGet(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {}
