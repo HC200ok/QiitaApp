@@ -30,13 +30,16 @@ public class SearchFragment extends Fragment {
     private PostAdapter postAdapter;
     private SearchView mSearchView;
     private LinearLayout progressLinearLayout;
+    View view;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_search, null);
-        initRecyclerView(view);
-        initSearchView(view);
+        if (view == null) {
+            view = inflater.inflate(R.layout.fragment_search, null);
+            initRecyclerView(view);
+            initSearchView(view);
+        }
         return view;
     }
 

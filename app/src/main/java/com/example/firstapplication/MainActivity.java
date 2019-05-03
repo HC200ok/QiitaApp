@@ -27,11 +27,13 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void initTab() {
-        Tab Tab_home = new Tab(R.drawable.home, R.string.home, HomeFragment.class);
-        Tab Tab_search = new Tab(R.drawable.search, R.string.search, SearchFragment.class);
+        Tab Tab_home = new Tab(R.drawable.selector_home, R.string.home, HomeFragment.class);
+        Tab Tab_search = new Tab(R.drawable.selector_search, R.string.search, SearchFragment.class);
+        Tab Tab_user = new Tab(R.drawable.selector_user, R.string.user, UserFragment.class);
 
         mTabs.add(Tab_home);
         mTabs.add(Tab_search);
+        mTabs.add(Tab_user);
 
         mInflater = LayoutInflater.from(this);
         mTabHost = findViewById(android.R.id.tabhost);

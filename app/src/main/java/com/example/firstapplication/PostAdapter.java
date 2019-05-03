@@ -7,8 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.firstapplication.bean.Post;
 import com.example.firstapplication.bean.Posts;
 import com.example.firstapplication.bean.Tag;
@@ -40,6 +42,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         viewHolder.time.setText(RelativeDateFormat.format(post.getCreated_at()));
         viewHolder.title.setText(post.getTitle());
         viewHolder.tags.setText(tagsToString(post.getTags()));
+        Glide.with(context)
+                .load(post.getUser().getProfile_image_url())
+                .into(viewHolder.authorImg);
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,7 +54,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 intent.putExtra(PostActivity.POST_TITLE, post.getTitle());
                 intent.putExtra(PostActivity.POST_CREATEDAT, post.getCreated_at());
                 intent.putExtra(PostActivity.POST_TAGS, tagsToString(post.getTags()));
-
                 context.startActivity(intent);
             }
         });
@@ -83,6 +88,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         TextView title;
         TextView tags;
         View itemView;
+        ImageView authorImg;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -91,6 +97,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             time = itemView.findViewById(R.id.post_time);
             title = itemView.findViewById(R.id.post_title);
             tags = itemView.findViewById(R.id.post_tags);
+            authorImg = itemView.findViewById(R.id.post_author_img);
         }
     }
 }

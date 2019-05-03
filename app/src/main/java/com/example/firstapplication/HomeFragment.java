@@ -43,11 +43,11 @@ public class HomeFragment extends Fragment {
         fragments.add(new HotFragment());
         fragments.add(new FollowFragment());
 
-        titles.add("选项卡1");
-        titles.add("选项卡2");
+        titles.add("新着");
+        titles.add("フォロー中");
 
-        tabLayout.addTab(tabLayout.newTab().setText("选项卡1"));
-        tabLayout.addTab(tabLayout.newTab().setText("选项卡2"));
+        tabLayout.addTab(tabLayout.newTab().setText("新着"));
+        tabLayout.addTab(tabLayout.newTab().setText("フォロー中"));
 
         MyAdapter adapter = new MyAdapter(getActivity().getSupportFragmentManager(), titles, fragments);
         viewPager.setAdapter(adapter);
