@@ -1,4 +1,7 @@
-package com.example.firstapplication;
+package com.example.firstapplication.util;
+
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.firstapplication.helper.UserHelper;
 import com.google.gson.Gson;
@@ -29,11 +32,20 @@ public class OkHttp3Utils {
     }
 
     public static void doGet(String url, Callback callback){
+        String token = UserHelper.getInstance().getToken();
         OkHttpClient okHttpClient = getOkHttpClient();
-        Request request = new Request.Builder()
-                .url(url)
-                .addHeader("Authorization", UserHelper.getInstance().getToken())
-                .build();
+        Request request;
+
+        if (TextUtils.isEmpty(token)) {
+            request = new Request.Builder()
+                    .url(url)
+                    .build();
+        } else {
+            request = new Request.Builder()
+                    .url(url)
+                    .addHeader("Authorization", token)
+                    .build();
+        }
         okHttpClient.newCall(request).enqueue(callback);
     }
 

@@ -1,5 +1,7 @@
 package com.example.firstapplication.helper;
 
+import android.text.TextUtils;
+
 public class UserHelper {
 
     private static UserHelper instance;
@@ -21,6 +23,10 @@ public class UserHelper {
 
     public String getToken() {
         return token;
+    }
+
+    public Boolean isLogin() {
+        return !TextUtils.isEmpty(token);
     }
 
     public void setToken(String phone) {

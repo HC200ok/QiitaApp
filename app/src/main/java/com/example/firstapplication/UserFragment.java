@@ -1,7 +1,6 @@
 package com.example.firstapplication;
 
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -13,18 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.firstapplication.bean.Post;
-import com.example.firstapplication.bean.Posts;
 import com.example.firstapplication.helper.UserHelper;
-import com.example.firstapplication.util.SPUtil;
-import com.google.gson.Gson;
+import com.example.firstapplication.util.OkHttp3Utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -39,27 +33,33 @@ public class UserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        NavBar.init(getActivity(), false, "プロフィール", "setting");
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_user, container, false);
+            emptyLinearLayout = view.findViewById(R.id.empty);
+            userInfoLinearLayout = view.findViewById(R.id.user_info);
             initView(view);
         }
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        initView(view);
+    }
+
     private void initView(View view) {
-        emptyLinearLayout = view.findViewById(R.id.empty);
-        userInfoLinearLayout = view.findViewById(R.id.user_info);
-        String token = UserHelper.getInstance().getToken();
-        if (TextUtils.isEmpty(token)) {
-            hideUserInfo();
-            showEmpty(view);
-        } else {
+        if (UserHelper.getInstance().isLogin()) {
             hideEmpty();
             initUserInfo(view);
+        } else {
+            hideUserInfo();
+            showEmpty();
         }
     }
 
-    private void showEmpty(View view) {
+    private void showEmpty() {
         emptyLinearLayout.setVisibility(View.VISIBLE);
     }
 
@@ -72,6 +72,7 @@ public class UserFragment extends Fragment {
     }
 
     private void initUserInfo(final View view) {
+        userInfoLinearLayout.setVisibility(View.VISIBLE);
         String url = "https://qiita.com/api/v2/authenticated_user";
         final ImageView IvUserImg = view.findViewById(R.id.user_img);
         final TextView TvUserId = view.findViewById(R.id.user_id);
@@ -106,7 +107,4 @@ public class UserFragment extends Fragment {
             }
         });
     }
-
-
-
 }

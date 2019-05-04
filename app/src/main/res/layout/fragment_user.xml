@@ -38,8 +38,7 @@
                 <ImageView
                     android:id="@+id/user_img"
                     android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/ic_launcher_foreground" />
+                    android:layout_height="80dp" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -51,7 +50,7 @@
                         android:textColor="#111"
                         android:textStyle="bold"
                         android:textSize="25dp"
-                        android:text="asdasdasfasf"/>
+                        android:text=""/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -66,7 +65,7 @@
                     android:id="@+id/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="sajnfdaknsfn"
+                    android:text=""
                     android:paddingLeft="5dp"/>
             </LinearLayout>
         </LinearLayout>

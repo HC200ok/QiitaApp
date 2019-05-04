@@ -14,14 +14,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.example.firstapplication.LoginActivity;
 import com.example.firstapplication.R;
-
-import static android.app.PendingIntent.getActivity;
-import static android.support.v4.content.ContextCompat.startActivity;
 
 public class LoginBtnView extends LinearLayout {
 

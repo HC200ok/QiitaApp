@@ -4,9 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".PostActivity">
+    tools:context=".PostActivity"
+    android:orientation="vertical">
+
+    <include layout="@layout/nav_bar"/>
 
     <LinearLayout
+        android:paddingTop="56dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -23,7 +27,7 @@
                 android:id="@+id/post_title"
                 android:text="撒打算打算打算"
                 android:textColor="#333"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textFontWeight=""/>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -66,7 +70,6 @@
             android:layout_height="1px"
             android:background="#333333"
             android:id="@+id/post_line"/>
-
         <TextView
             android:layout_alignBottom="@+id/post_line"
             android:autoLink="web"
@@ -80,11 +83,10 @@
             android:paddingLeft="10dp" />
     </LinearLayout>
 
-
     <LinearLayout
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:background="#eee"
         android:orientation="horizontal"
         android:paddingTop="10dp"

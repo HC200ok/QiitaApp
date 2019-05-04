@@ -2,7 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="56dp"
-    android:background="@color/qiita">
+    android:background="@color/qiita"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
     <ImageView
         android:id="@+id/iv_back"
         android:layout_width="wrap_content"
@@ -20,9 +22,16 @@
         android:layout_gravity="center"/>
 
     <ImageView
-        android:id="@+id/iv_me"
+        android:id="@+id/setting"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/icon_setting"
+        android:layout_gravity="right|center_vertical"/>
+
+    <ImageView
+        android:id="@+id/close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/me"
+        android:src="@mipmap/icon_close"
         android:layout_gravity="right|center_vertical"/>
 </FrameLayout>

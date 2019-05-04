@@ -7,6 +7,8 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
+    <include layout="@layout/nav_bar"/>
+
     <FrameLayout
         android:id="@+id/realcontent"
         android:layout_width="match_parent"
@@ -20,13 +22,15 @@
         android:layout_height="wrap_content"
         android:background="#F6F6F6"
         android:padding="5dp">
+        <!--<TabWidget-->
+            <!--android:id="@android:id/tabs"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content" />-->
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="0dp"
             android:layout_height="0dp"></FrameLayout>
     </android.support.v4.app.FragmentTabHost>
-
-
 
 
 </LinearLayout>

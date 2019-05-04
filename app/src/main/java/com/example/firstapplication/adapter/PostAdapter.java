@@ -1,4 +1,4 @@
-package com.example.firstapplication;
+package com.example.firstapplication.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.firstapplication.PostActivity;
+import com.example.firstapplication.R;
 import com.example.firstapplication.bean.Post;
-import com.example.firstapplication.bean.Posts;
 import com.example.firstapplication.bean.Tag;
 import com.example.firstapplication.util.RelativeDateFormat;
 

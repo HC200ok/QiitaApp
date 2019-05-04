@@ -1,11 +1,14 @@
 package com.example.firstapplication;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.example.firstapplication.constants.OauthConstants;
+import com.example.firstapplication.helper.UserHelper;
+import com.example.firstapplication.util.OkHttp3Utils;
 import com.example.firstapplication.util.SPUtil;
 import com.example.firstapplication.util.URLUtil;
 
@@ -20,13 +23,13 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends Activity {
     WebView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        NavBar.init(LoginActivity.this, false, "ログイン", "close");
         initWebView();
     }
 
@@ -37,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.contains("code")) {
+                    webView.setVisibility(View.GONE);
                     Map<String, String> mapRequest = URLUtil.getRequestParamMap(url);
                     if (mapRequest != null && mapRequest.size() != 0) {
                         String code = mapRequest.get("code");
@@ -64,15 +68,18 @@ public class LoginActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(response.body().string());
                         String token = "Bearer " + jsonObject.getString("token");
                         SPUtil.saveToken(LoginActivity.this,token);
+                        UserHelper.getInstance().setToken(token);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                onBackPressed();
+                            }
+                        });
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             }
         });
-    }
-
-    private void closeLogin() {
-        this.overridePendingTransition(R.anim.activity_close,0);
     }
 }

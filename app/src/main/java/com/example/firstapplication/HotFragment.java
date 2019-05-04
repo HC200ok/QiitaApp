@@ -3,18 +3,17 @@ package com.example.firstapplication;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.firstapplication.adapter.PostAdapter;
 import com.example.firstapplication.bean.Post;
 import com.example.firstapplication.bean.Posts;
+import com.example.firstapplication.util.OkHttp3Utils;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -74,7 +73,9 @@ public class HotFragment extends SmartRefreshFragment {
         String url = "https://qiita.com/api/v2/items?per_page=20&page=" + page;
         OkHttp3Utils.doGet(url, new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {}
+            public void onFailure(Call call, IOException e) {
+                Log.e("load fail", "load fail");
+            }
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 //Gson解析

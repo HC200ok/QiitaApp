@@ -1,10 +1,10 @@
 package com.example.firstapplication;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
@@ -15,7 +15,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
-public class PostActivity extends AppCompatActivity {
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+public class PostActivity extends Activity {
     public static final String POST_BODY = "postBody";
     public static final String POST_CREATEDAT = "postCreatedAt";
     public static final String POST_TITLE = "postTitle";
@@ -24,11 +27,14 @@ public class PostActivity extends AppCompatActivity {
     String post_body;
     TextView tvPostBody;
 
+    public static PostActivity instance = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-
+        instance = this;
+        NavBar.init(instance, true, "", "");
         initView();
     }
 
@@ -38,6 +44,16 @@ public class PostActivity extends AppCompatActivity {
         imageLoader.init(ImageLoaderConfiguration.createDefault(this));
 
         String postCreatedAt = getIntent().getStringExtra(POST_CREATEDAT);
+
+        SimpleDateFormat origin_format1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        SimpleDateFormat new_format = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+
+        try {
+            postCreatedAt = new_format.format(origin_format1.parse(postCreatedAt));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         TextView tvPostCreatedAt = findViewById(R.id.post_createdAt);
         tvPostCreatedAt.setText(postCreatedAt);
 
@@ -56,7 +72,7 @@ public class PostActivity extends AppCompatActivity {
         tvPostBody.setText(Html.fromHtml(post_body, imageGetter, null));
     }
 
-    public class URLImageParser implements Html.ImageGetter {
+    private class URLImageParser implements Html.ImageGetter {
         TextView mTextView;
         public URLImageParser(TextView textView) {
             this.mTextView = textView;
@@ -79,7 +95,7 @@ public class PostActivity extends AppCompatActivity {
     }
 
 
-    public class URLDrawable extends BitmapDrawable {
+    private class URLDrawable extends BitmapDrawable {
         protected Bitmap bitmap;
         @Override
         public void draw(Canvas canvas) {

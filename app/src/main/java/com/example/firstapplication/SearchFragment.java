@@ -11,10 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 
+import com.example.firstapplication.adapter.PostAdapter;
 import com.example.firstapplication.bean.Post;
 import com.example.firstapplication.bean.Posts;
+import com.example.firstapplication.util.OkHttp3Utils;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -35,6 +36,7 @@ public class SearchFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        NavBar.init(getActivity(), false, "検索", "");
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_search, null);
             initRecyclerView(view);
