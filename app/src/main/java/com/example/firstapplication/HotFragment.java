@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.firstapplication.adapter.PostAdapter;
 import com.example.firstapplication.bean.Post;
@@ -31,6 +32,7 @@ public class HotFragment extends SmartRefreshFragment {
     private RecyclerView recyclerView;
     private RefreshLayout refreshLayout;
     private PostAdapter postAdapter;
+    private LinearLayout loadingLayout;
     private int page = 1;
 
     @Nullable
@@ -40,9 +42,14 @@ public class HotFragment extends SmartRefreshFragment {
 
         initRecyclerView(view);
         initSmartRefresh(view);
+        initLoadingLayout(view);
 
         getData("firstLoad");
         return view;
+    }
+
+    private void initLoadingLayout(View view) {
+        loadingLayout = view.findViewById(R.id.loading);
     }
 
     private void initRecyclerView(View view) {
@@ -69,7 +76,7 @@ public class HotFragment extends SmartRefreshFragment {
     }
 
     private void getData(final String loadType) {
-        if (loadType == "firstLoad") page = 1;
+        if (loadType == "firstLoad") { page = 1; }
         String url = "https://qiita.com/api/v2/items?per_page=20&page=" + page;
         OkHttp3Utils.doGet(url, new Callback() {
             @Override
@@ -92,6 +99,7 @@ public class HotFragment extends SmartRefreshFragment {
                                 postAdapter = new PostAdapter(getContext(), results);
                                 recyclerView.setAdapter(postAdapter);
                                 postAdapter.notifyDataSetChanged();
+                                loadingLayout.setVisibility(View.GONE);
                             } else if (loadType == "refresh") {
                                 postAdapter.refreshData(results);
                                 refreshLayout.finishRefresh();

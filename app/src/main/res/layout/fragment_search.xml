@@ -26,9 +26,9 @@
             android:layout_gravity="center"
             android:indeterminate="true"
             android:background="#fff"
+            android:indeterminateTint="@color/qiita"
             />
     </LinearLayout>
-
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"

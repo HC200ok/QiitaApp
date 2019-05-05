@@ -6,7 +6,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.example.firstapplication.constants.OauthConstants;
+import com.example.firstapplication.constants.QiitaConstants;
 import com.example.firstapplication.helper.UserHelper;
 import com.example.firstapplication.util.OkHttp3Utils;
 import com.example.firstapplication.util.SPUtil;
@@ -35,7 +35,7 @@ public class LoginActivity extends Activity {
 
     private void initWebView() {
         webView = findViewById(R.id.webview);
-        webView.loadUrl(OauthConstants.AUTH_URL);
+        webView.loadUrl(QiitaConstants.AUTH_URL);
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -54,11 +54,11 @@ public class LoginActivity extends Activity {
 
     private void Login(String code) {
         Map<String, String> map = new HashMap<>();
-        map.put("client_id", OauthConstants.CLIENT_ID);
-        map.put("client_secret", OauthConstants.CLIENT_SECRET);
+        map.put("client_id", QiitaConstants.CLIENT_ID);
+        map.put("client_secret", QiitaConstants.CLIENT_SECRET);
         map.put("code", code);
 
-        OkHttp3Utils.doPost(OauthConstants.TOKEN_URL, map, new Callback() {
+        OkHttp3Utils.doPost(QiitaConstants.TOKEN_URL, map, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {}
             @Override

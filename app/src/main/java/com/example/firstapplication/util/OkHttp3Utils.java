@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import java.util.Map;
 
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -49,7 +50,6 @@ public class OkHttp3Utils {
         okHttpClient.newCall(request).enqueue(callback);
     }
 
-
     public static void doPost(String url, Map<String,String> map, Callback callback){
         OkHttpClient okHttpClient = getOkHttpClient();
         Gson gson = new Gson();
@@ -62,4 +62,29 @@ public class OkHttp3Utils {
                 .build();
         okHttpClient.newCall(request).enqueue(callback);
     }
+
+    public static void doPut(String url, Callback callback) {
+        OkHttpClient okHttpClient = getOkHttpClient();
+        String json = "{}";
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(url)
+                .put(body)
+                .addHeader("Authorization", UserHelper.getInstance().getToken())
+                .build();
+        okHttpClient.newCall(request).enqueue(callback);
+    }
+
+    public static void doDelete(String url, Callback callback){
+        OkHttpClient okHttpClient = getOkHttpClient();
+        String json = "{}";
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(url)
+                .delete(body)
+                .addHeader("Authorization", UserHelper.getInstance().getToken())
+                .build();
+        okHttpClient.newCall(request).enqueue(callback);
+    }
+
 }

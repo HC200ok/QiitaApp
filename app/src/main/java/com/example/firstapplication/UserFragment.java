@@ -72,7 +72,6 @@ public class UserFragment extends Fragment {
     }
 
     private void initUserInfo(final View view) {
-        userInfoLinearLayout.setVisibility(View.VISIBLE);
         String url = "https://qiita.com/api/v2/authenticated_user";
         final ImageView IvUserImg = view.findViewById(R.id.user_img);
         final TextView TvUserId = view.findViewById(R.id.user_id);
@@ -95,6 +94,7 @@ public class UserFragment extends Fragment {
                                             .into(IvUserImg);
                                     TvUserId.setText(jsonObject.getString("id"));
                                     TvUserName.setText(jsonObject.getString("name"));
+                                    userInfoLinearLayout.setVisibility(View.VISIBLE);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
