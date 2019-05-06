@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">First Application</string>
+    <string name="app_name">HCのQiita</string>
     <string name="home">フィード</string>
     <string name="search">検索</string>
     <string name="user">プロフィール</string>

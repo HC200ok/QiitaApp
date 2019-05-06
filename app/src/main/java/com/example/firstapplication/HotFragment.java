@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import com.example.firstapplication.adapter.PostAdapter;
 import com.example.firstapplication.bean.Post;
 import com.example.firstapplication.bean.Posts;
+import com.example.firstapplication.constants.QiitaConstants;
 import com.example.firstapplication.util.OkHttp3Utils;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -77,7 +78,7 @@ public class HotFragment extends SmartRefreshFragment {
 
     private void getData(final String loadType) {
         if (loadType == "firstLoad") { page = 1; }
-        String url = "https://qiita.com/api/v2/items?per_page=20&page=" + page;
+        String url = QiitaConstants.HOST + "/items?per_page=20&page=" + page;
         OkHttp3Utils.doGet(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

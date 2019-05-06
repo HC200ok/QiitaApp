@@ -2,6 +2,8 @@ package com.example.firstapplication.helper;
 
 import android.text.TextUtils;
 
+import com.example.firstapplication.bean.User;
+
 public class UserHelper {
 
     private static UserHelper instance;
@@ -20,6 +22,15 @@ public class UserHelper {
     }
 
     private String token;
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getToken() {
         return token;

@@ -12,17 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.firstapplication.bean.User;
 import com.example.firstapplication.helper.UserHelper;
-import com.example.firstapplication.util.OkHttp3Utils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class UserFragment extends Fragment {
     LinearLayout emptyLinearLayout;
@@ -38,7 +29,7 @@ public class UserFragment extends Fragment {
             view = inflater.inflate(R.layout.fragment_user, container, false);
             emptyLinearLayout = view.findViewById(R.id.empty);
             userInfoLinearLayout = view.findViewById(R.id.user_info);
-            initView(view);
+            initView();
         }
         return view;
     }
@@ -46,13 +37,13 @@ public class UserFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        initView(view);
+        initView();
     }
 
-    private void initView(View view) {
+    private void initView() {
         if (UserHelper.getInstance().isLogin()) {
             hideEmpty();
-            initUserInfo(view);
+            initUserInfo();
         } else {
             hideUserInfo();
             showEmpty();
@@ -71,40 +62,17 @@ public class UserFragment extends Fragment {
         emptyLinearLayout.setVisibility(View.GONE);
     }
 
-    private void initUserInfo(final View view) {
-        String url = "https://qiita.com/api/v2/authenticated_user";
-        final ImageView IvUserImg = view.findViewById(R.id.user_img);
-        final TextView TvUserId = view.findViewById(R.id.user_id);
-        final TextView TvUserName = view.findViewById(R.id.user_name);
-        OkHttp3Utils.doGet(url, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-            }
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    try {
-                        final JSONObject jsonObject = new JSONObject(response.body().string());
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    Glide.with(getContext())
-                                            .load(jsonObject.getString("profile_image_url"))
-                                            .into(IvUserImg);
-                                    TvUserId.setText(jsonObject.getString("id"));
-                                    TvUserName.setText(jsonObject.getString("name"));
-                                    userInfoLinearLayout.setVisibility(View.VISIBLE);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+    private void initUserInfo() {
+        ImageView IvUserImg = view.findViewById(R.id.user_img);
+        TextView TvUserId = view.findViewById(R.id.user_id);
+        TextView TvUserName = view.findViewById(R.id.user_name);
+
+        User user = UserHelper.getInstance().getUser();
+        Glide.with(getContext())
+                .load(user.getProfile_image_url())
+                .into(IvUserImg);
+        TvUserId.setText(user.getId());
+        TvUserName.setText(user.getName());
+        userInfoLinearLayout.setVisibility(View.VISIBLE);
     }
 }
