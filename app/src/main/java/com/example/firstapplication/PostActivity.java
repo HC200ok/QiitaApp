@@ -103,6 +103,7 @@ public class PostActivity extends Activity {
         URLImageParser imageGetter = new URLImageParser(tvPostBody);
         tvPostBody.setMovementMethod(ScrollingMovementMethod.getInstance());
         tvPostBody.setText(Html.fromHtml(postBody, imageGetter, null));
+
     }
 
     private class URLImageParser implements Html.ImageGetter {
