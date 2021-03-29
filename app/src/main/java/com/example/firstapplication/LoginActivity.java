@@ -2,6 +2,7 @@ package com.example.firstapplication;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -42,7 +43,6 @@ public class LoginActivity extends Activity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.contains("code")) {
-                    webView.setVisibility(View.GONE);
                     Map<String, String> mapRequest = URLUtil.getRequestParamMap(url);
                     if (mapRequest != null && mapRequest.size() != 0) {
                         String code = mapRequest.get("code");
