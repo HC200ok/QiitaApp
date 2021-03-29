@@ -1,5 +1,7 @@
 ## my first application for learning android develop
 
+#### using [Qiita API v2](https://qiita.com/api/v2/docs)
+
 #### landing page
 <img src="./images/landing.jpeg" width="150px"/><br/>
 
